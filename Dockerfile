@@ -56,4 +56,4 @@ RUN npm install
 EXPOSE 8082
 
 # Start your Node.js application
-CMD ["node", "index.js"]
+CMD ["npm", "run", "start"]

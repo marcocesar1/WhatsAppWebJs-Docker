@@ -1,31 +1,59 @@
-const { Client, LocalAuth } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
+const { Client, LocalAuth } = require("whatsapp-web.js");
+require("dotenv").config();
 
-const client = new Client({
-  puppeteer: {
-    headless: true,
-    args: ["--no-sandbox"],
-    executablePath: "/usr/bin/chromium",
-  },
-  authStrategy: new LocalAuth(),
-});
+const express = require("express");
+const app = express();
+const port = 3000;
 
-client.on("ready", () => {
-  console.log("Client is ready!");
-});
+const { getPromoDescuentosCron, getPromoDescuentosHealth } = require("./cron");
 
-client.on("message", (msg) => {
-  console.log({ message: msg.body });
-  if (msg.body == "!ping") {
-    msg.reply("pong");
-  }
-});
+async function init() {
+  console.log("Bot is running!");
 
-client.on("qr", (qr) => {
-  console.log("QR RECEIVED", qr);
-  qrcode.generate(qr, { small: true });
-});
+  console.log({
+    env: process.env.NODE_ENV,
+  });
 
-client.initialize();
+  const client = new Client({
+    puppeteer: {
+      headless: true,
+      args: ["--no-sandbox"],
+      executablePath: "/usr/bin/chromium",
+    },
+    authStrategy: new LocalAuth(),
+  });
 
-console.log("Bot is running!");
+  const cron = getPromoDescuentosCron(client);
+  const healthCron = getPromoDescuentosHealth(client);
+
+  client.on("ready", async () => {
+    console.log("Client is ready!");
+
+    cron.start();
+    healthCron.start();
+  });
+
+  client.on("message", (msg) => {
+    console.log({ message: msg.body });
+    if (msg.body == "!ping") {
+      msg.reply("pong");
+    }
+  });
+
+  client.on("qr", (qr) => {
+    qrcode.generate(qr, { small: true });
+  });
+
+  client.initialize();
+
+  app.get("/", (req, res) => {
+    res.send("Hello World!");
+  });
+
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+  });
+}
+
+init();
