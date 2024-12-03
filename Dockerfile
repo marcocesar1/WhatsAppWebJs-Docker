@@ -47,7 +47,8 @@ RUN apt-get update \
 WORKDIR /app
 
 # Copy your application files into the container
-COPY . .
+COPY src ./src
+COPY package*.json ./
 
 # Install your Node.js application dependencies
 RUN npm install
