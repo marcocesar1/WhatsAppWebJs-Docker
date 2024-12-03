@@ -18,8 +18,18 @@ async function init() {
   const client = new Client({
     puppeteer: {
       headless: true,
-      args: ["--no-sandbox"],
-      executablePath: "/usr/bin/chromium",
+      //args: ["--no-sandbox"],
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--disable-accelerated-2d-canvas",
+        "--no-zygote",
+        "--single-process",
+        "--disable-web-security",
+      ],
+      // executablePath: "/usr/bin/chromium",
     },
     authStrategy: new LocalAuth(),
   });
