@@ -10,15 +10,17 @@ const {
 } = require("./config");
 
 const getPromoDescuentosCron = (client) => {
-  const job = new CronJob("*/1 * * * *", async () => {
-    console.log("Tarea ejecutada cada 1 minutos:", new Date());
+  const job = new CronJob("*/30 * * * *", async () => {
+    console.log("Tarea ejecutada cada 30 minutos:", new Date());
 
     const products = await getProducts(PRODUCTS_URL);
     const productsFiltered = products.filter((product) =>
       product.human_date.includes("hace")
     );
 
-    console.log(productsFiltered.length + " products webscraping");
+    console.log(
+      productsFiltered.length + " products webscraping on url" + PRODUCTS_URL
+    );
 
     fs.readFile(FILENAME, "utf8", async function (err, data) {
       if (err) throw err;

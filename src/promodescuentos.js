@@ -7,6 +7,7 @@ async function getProducts(url) {
     args: ["--no-sandbox", "--disable-setuid-sandbox", "--single-process"],
     headless: true,
     executablePath: "/usr/bin/chromium",
+    userDataDir: "/tmp/puppeteer-profile-1",
   });
 
   const page = await browser.newPage();
