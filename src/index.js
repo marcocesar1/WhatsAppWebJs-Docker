@@ -34,14 +34,14 @@ async function init() {
     authStrategy: new LocalAuth(),
   });
 
-  /* const cron = getPromoDescuentosCron(client);
-  const healthCron = getPromoDescuentosHealth(client); */
-
   client.on("ready", async () => {
     console.log("Client is ready!");
 
-    // cron.start();
-    // healthCron.start();
+    const cron = getPromoDescuentosCron(client);
+    const healthCron = getPromoDescuentosHealth(client);
+
+    cron.start();
+    healthCron.start();
   });
 
   client.on("message", (msg) => {
