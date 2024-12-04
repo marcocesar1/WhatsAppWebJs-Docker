@@ -10,9 +10,12 @@ const PHONE = {
   USER: process.env.USER_PHONE,
 };
 
+const WA_API = process.env.API_WA;
+
 module.exports = {
   PRODUCTS_HEALTH_URL,
   PRODUCTS_URL,
   FILENAME,
   PHONE,
+  WA_API,
 };

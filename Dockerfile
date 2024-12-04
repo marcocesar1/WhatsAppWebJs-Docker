@@ -49,12 +49,13 @@ WORKDIR /app
 # Copy your application files into the container
 COPY src ./src
 COPY package*.json ./
+COPY .env ./.env
 
 # Install your Node.js application dependencies
 RUN npm install
 
 # Expose the port your application runs on
-EXPOSE 8082
+EXPOSE 3002
 
 # Start your Node.js application
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "prod"]
