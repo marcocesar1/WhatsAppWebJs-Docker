@@ -4,10 +4,13 @@ async function getProducts(url) {
   const products = [];
 
   const browser = await puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox", "--single-process"],
+    /* args: ["--no-sandbox", "--disable-setuid-sandbox", "--single-process"],
     headless: true,
     executablePath: "/usr/bin/chromium",
-    userDataDir: "/tmp/puppeteer-profile-1",
+    userDataDir: "/tmp/puppeteer-profile-1", */
+    args: ["--no-sandbox"],
+    headless: true,
+    executablePath: "/usr/bin/chromium",
   });
 
   const page = await browser.newPage();

@@ -108,12 +108,12 @@ const getPromoDescuentosHealth = () => {
 
 const getStatusHealth = () => {
   const job = new CronJob(
-    "0 * * * *",
+    "0 */3 * * *",
     async () => {
       console.log("Estatus WA health: ", new Date());
 
       const adminPhoneNumber = PHONE.ADMIN;
-      const message = `Estatus WA: OK\n\nFecha: ${new Date()}`;
+      const message = `Estatus WA: OK}`;
 
       await sendMessage(WA_API, adminPhoneNumber, message);
     },
@@ -126,7 +126,7 @@ const getStatusHealth = () => {
 };
 
 module.exports = {
+  getStatusHealth,
   getPromoDescuentosCron,
   getPromoDescuentosHealth,
-  getStatusHealth,
 };
